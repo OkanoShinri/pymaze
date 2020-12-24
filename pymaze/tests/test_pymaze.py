@@ -7,4 +7,5 @@ class Test(TestCase):
         tmp = pymaze.pymaze.pyMaze_makemaze(7, 9)
         self.assertEqual(type(tmp), list)
         self.assertEqual(0, tmp[2][2])
+        self.assertEqual(1, tmp[1][1])
 

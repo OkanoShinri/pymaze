@@ -61,6 +61,13 @@ def pyMaze_makemaze(width: int, height: int) -> list:
             CurrentPos[1] += 2 * vec[1]
 
     # 生成完了
+    for i in range(width):
+        MazeMap[i][0] = 0
+        MazeMap[i][height - 1] = 1
+    for i in range(height):
+        MazeMap[0][i] = 0
+        MazeMap[width - 1][i] = 1
+
     return MazeMap
 
 
