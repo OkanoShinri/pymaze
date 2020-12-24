@@ -1,18 +1,14 @@
 import random
 
-"""
-def pymaze_play(maze: list):
-    mypos = [2,2]
-"""
-
 
 def pyMaze_draw(maze: list):
     if type(maze[0]) is not list:
         print("ERROR:Maze must be 2D array.")
         exit()
+    DrawObjects = {0: " ⬜", 1: " ⬛"}
     for j in range(len(maze[0])):
         for i in range(len(maze)):
-            print(maze[i][j], end="")
+            print(DrawObjects[maze[i][j]], end="")
         print()
 
 
@@ -76,6 +72,13 @@ def pyMaze_makemaze(width: int = 15, height: int = 9) -> list:
             CurrentPos[1] += 2 * vec[1]
 
     # 探索終了
+    for i in range(width):
+        MazeMap[i][0] = 1
+        MazeMap[i][height - 1] = 1
+    for i in range(height):
+        MazeMap[0][i] = 1
+        MazeMap[width - 1][i] = 1
+
     return MazeMap
 
 
