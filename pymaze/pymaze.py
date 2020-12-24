@@ -94,6 +94,11 @@ def play(maze: list):
     mypos = [2, 2]
 
     while True:
+        if mypos == [len(maze_original)-3, len(maze_original[0])-3]:
+            draw(maze_original)
+            print("Congratulations!")
+            break
+
         os.system('cls')
         print()
         maze_tmp = copy.deepcopy(maze_original)
@@ -125,4 +130,4 @@ def pymaze(width: int = 15, height: int = 9):
     maze = makemaze(width, height)
     play(maze)
 
-pymaze(19, 15)
+pymaze(11, 9)
