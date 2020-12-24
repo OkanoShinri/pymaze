@@ -82,6 +82,11 @@ def pyMaze_makemaze(width: int = 15, height: int = 9) -> list:
     return MazeMap
 
 
+def pyMaze_play(maze: list):
+    origimalMaze = maze
+    mypos = [2,2]
+
+
 def pyMaze(width: int = 15, height: int = 9):
     maze = pyMaze_makemaze(width, height)
     pyMaze_draw(maze)
