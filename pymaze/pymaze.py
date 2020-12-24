@@ -71,6 +71,10 @@ def pyMaze_makemaze(width: int, height: int) -> list:
     return MazeMap
 
 
+def pyMaze_draw(maze: list):
+    pass
+
+
 def pyMaze(width: int = 15, height: int = 9):
     maze = pyMaze_makemaze(width, height)
     print(maze[2][2])
