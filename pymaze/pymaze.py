@@ -12,6 +12,7 @@ def draw(maze: list,x_min: int = 0, x_max: int = 0, y_min: int =0, y_max:int = 0
     if y_max == 0:
         y_max = len(maze[0])
 
+
     draw_objects = {0: "\u001b[30m ⬛\u001b[0m", 1: "\u001b[37m ⬛\u001b[0m", 2:"\u001b[34m ⬛\u001b[0m", 3:"\u001b[31m ⬛\u001b[0m"}
     for j in range(y_min,y_max):
         for i in range(x_min,x_max):
@@ -90,6 +91,7 @@ def makemaze(width: int = 15, height: int = 9) -> list:
 
 
 def play(maze: list):
+
     maze_original = maze
     mypos = [2, 2]
 
@@ -103,6 +105,7 @@ def play(maze: list):
         print()
         maze_tmp = copy.deepcopy(maze_original)
         maze_tmp[mypos[0]][mypos[1]] = 3
+
         draw(maze_tmp, mypos[0]-2, mypos[0]+3, mypos[1]-2, mypos[1]+3)
         print()
 
