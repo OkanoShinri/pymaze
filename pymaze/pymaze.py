@@ -3,7 +3,7 @@ import copy
 import os
 
 
-def draw(maze: list,x_min: int = 0, x_max: int = 0, y_min: int =0, y_max:int = 0 ):
+def draw(maze: list, x_min: int = 0, x_max: int = 0, y_min: int = 0, y_max: int = 0):
     if type(maze[0]) is not list:
         print("ERROR:Maze must be 2D array.")
         exit()
@@ -12,10 +12,10 @@ def draw(maze: list,x_min: int = 0, x_max: int = 0, y_min: int =0, y_max:int = 0
     if y_max == 0:
         y_max = len(maze[0])
 
-
-    draw_objects = {0: "\u001b[30m ⬛\u001b[0m", 1: "\u001b[37m ⬛\u001b[0m", 2:"\u001b[34m ⬛\u001b[0m", 3:"\u001b[31m ⬛\u001b[0m"}
-    for j in range(y_min,y_max):
-        for i in range(x_min,x_max):
+    draw_objects = {0: "\u001b[30m ⬛\u001b[0m", 1: "\u001b[37m ⬛\u001b[0m", 2: "\u001b[34m ⬛\u001b[0m",
+                    3: "\u001b[31m ⬛\u001b[0m"}
+    for j in range(y_min, y_max):
+        for i in range(x_min, x_max):
             print(draw_objects[maze[i][j]], end="")
         print()
 
@@ -74,7 +74,8 @@ def makemaze(width: int = 15, height: int = 9) -> list:
                 start_points.append(current_position[:])
 
             vec = random.choice(moveable_directions)
-            maze_map[current_position[0] + 2 * vec[0]][current_position[1] + 2 * vec[1]] = maze_map[current_position[0] + vec[0]][
+            maze_map[current_position[0] + 2 * vec[0]][current_position[1] + 2 * vec[1]] = \
+            maze_map[current_position[0] + vec[0]][
                 current_position[1] + vec[1]] = 0
             current_position[0] += 2 * vec[0]
             current_position[1] += 2 * vec[1]
@@ -86,17 +87,16 @@ def makemaze(width: int = 15, height: int = 9) -> list:
     for i in range(height):
         maze_map[0][i] = 1
         maze_map[width - 1][i] = 1
-    maze_map[2][2] = maze_map[width-3][height-3] = 2
+    maze_map[2][2] = maze_map[width - 3][height - 3] = 2
     return maze_map
 
 
 def play(maze: list):
-
     maze_original = maze
     mypos = [2, 2]
 
     while True:
-        if mypos == [len(maze_original)-3, len(maze_original[0])-3]:
+        if mypos == [len(maze_original) - 3, len(maze_original[0]) - 3]:
             draw(maze_original)
             print("Congratulations!")
             break
@@ -106,7 +106,7 @@ def play(maze: list):
         maze_tmp = copy.deepcopy(maze_original)
         maze_tmp[mypos[0]][mypos[1]] = 3
 
-        draw(maze_tmp, mypos[0]-2, mypos[0]+3, mypos[1]-2, mypos[1]+3)
+        draw(maze_tmp, mypos[0] - 2, mypos[0] + 3, mypos[1] - 2, mypos[1] + 3)
         print()
 
         command = input("command:")
@@ -133,4 +133,5 @@ def pymaze(width: int = 15, height: int = 9):
     maze = makemaze(width, height)
     play(maze)
 
-pymaze(11, 9)
+
+pymaze()
