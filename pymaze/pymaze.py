@@ -5,7 +5,7 @@ def pyMaze_draw(maze: list):
     if type(maze[0]) is not list:
         print("ERROR:Maze must be 2D array.")
         exit()
-    DrawObjects = {0: " ⬜", 1: " ⬛"}
+    DrawObjects = {0: " ⬜", 1: " ⬛", 2:" 🟦"}
     for j in range(len(maze[0])):
         for i in range(len(maze)):
             print(DrawObjects[maze[i][j]], end="")
@@ -78,17 +78,34 @@ def pyMaze_makemaze(width: int = 15, height: int = 9) -> list:
     for i in range(height):
         MazeMap[0][i] = 1
         MazeMap[width - 1][i] = 1
-
+    MazeMap[2][2] = MazeMap[width-3][height-3] = 2
     return MazeMap
 
 
 def pyMaze_play(maze: list):
     origimalMaze = maze
-    mypos = [2,2]
+    mypos = [2, 2]
+
+    while True:
+        tmpMaze = origimalMaze
+        command = input()
+        if command == "W" or command == "w":
+            mypos[1] -= 1
+        if command == "A" or command == "a":
+            mypos[0] -= 1
+        if command == "S" or command == "s":
+            mypos[1] += 1
+        if command == "D" or command == "d":
+            mypos[0] += 1
+        if command == "E" or command == "e":
+            pass
+        if command == "Q" or command == "q":
+            break
+
 
 
 def pyMaze(width: int = 15, height: int = 9):
     maze = pyMaze_makemaze(width, height)
-    pyMaze_draw(maze)
+    pyMaze_play(maze)
 
 pyMaze(19, 15)
