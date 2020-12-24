@@ -1,7 +1,22 @@
 import random
 
+"""
+def pymaze_play(maze: list):
+    mypos = [2,2]
+"""
 
-def pyMaze_makemaze(width: int, height: int) -> list:
+
+def pyMaze_draw(maze: list):
+    if type(maze[0]) is not list:
+        print("ERROR:Maze must be 2D array.")
+        exit()
+    for j in range(len(maze[0])):
+        for i in range(len(maze)):
+            print(maze[i][j], end="")
+        print()
+
+
+def pyMaze_makemaze(width: int = 15, height: int = 9) -> list:
     playable = True
     if width % 2 == 0 or height % 2 == 0:
         print("The argument must be an odd number.")
@@ -52,7 +67,7 @@ def pyMaze_makemaze(width: int, height: int) -> list:
                 if CurrentPos in StartPoints:
                     StartPoints.remove(CurrentPos)
             else:
-                StartPoints.append(CurrentPos)
+                StartPoints.append(CurrentPos[:])
 
             vec = random.choice(moveableDirections)
             MazeMap[CurrentPos[0] + 2 * vec[0]][CurrentPos[1] + 2 * vec[1]] = MazeMap[CurrentPos[0] + vec[0]][
@@ -60,21 +75,12 @@ def pyMaze_makemaze(width: int, height: int) -> list:
             CurrentPos[0] += 2 * vec[0]
             CurrentPos[1] += 2 * vec[1]
 
-    # 生成完了
-    for i in range(width):
-        MazeMap[i][0] = 0
-        MazeMap[i][height - 1] = 1
-    for i in range(height):
-        MazeMap[0][i] = 0
-        MazeMap[width - 1][i] = 1
-
+    # 探索終了
     return MazeMap
-
-
-def pyMaze_draw(maze: list):
-    pass
 
 
 def pyMaze(width: int = 15, height: int = 9):
     maze = pyMaze_makemaze(width, height)
-    print(maze[2][2])
+    pyMaze_draw(maze)
+
+pyMaze(19, 15)
