@@ -3,15 +3,15 @@ import copy
 import os
 
 
-def pymaze_draw(maze: list,x_min: int = 0, x_max: int = 0, y_min: int =0, y_max:int = 0 ):
-
+def draw(maze: list,x_min: int = 0, x_max: int = 0, y_min: int =0, y_max:int = 0 ):
+    if type(maze[0]) is not list:
+        print("ERROR:Maze must be 2D array.")
+        exit()
     if x_max == 0:
         x_max = len(maze)
     if y_max == 0:
         y_max = len(maze[0])
-    if type(maze[0]) is not list:
-        print("ERROR:Maze must be 2D array.")
-        exit()
+
     draw_objects = {0: "\u001b[30m ⬛\u001b[0m", 1: "\u001b[37m ⬛\u001b[0m", 2:"\u001b[34m ⬛\u001b[0m", 3:"\u001b[31m ⬛\u001b[0m"}
     for j in range(y_min,y_max):
         for i in range(x_min,x_max):
@@ -19,7 +19,7 @@ def pymaze_draw(maze: list,x_min: int = 0, x_max: int = 0, y_min: int =0, y_max:
         print()
 
 
-def pymaze_makemaze(width: int = 15, height: int = 9) -> list:
+def makemaze(width: int = 15, height: int = 9) -> list:
     playable = True
     if width % 2 == 0 or height % 2 == 0:
         print("The argument must be an odd number.")
@@ -89,7 +89,7 @@ def pymaze_makemaze(width: int = 15, height: int = 9) -> list:
     return maze_map
 
 
-def pymaze_play(maze: list):
+def play(maze: list):
     maze_original = maze
     mypos = [2, 2]
 
@@ -98,28 +98,31 @@ def pymaze_play(maze: list):
         print()
         maze_tmp = copy.deepcopy(maze_original)
         maze_tmp[mypos[0]][mypos[1]] = 3
-        pymaze_draw(maze_tmp, mypos[0]-2, mypos[0]+3, mypos[1]-2, mypos[1]+3)
-
+        draw(maze_tmp, mypos[0]-2, mypos[0]+3, mypos[1]-2, mypos[1]+3)
+        print()
 
         command = input("command:")
         if command == "W" or command == "w":
-            mypos[1] -= 1
+            if maze_tmp[mypos[0]][mypos[1] - 1] != 1:
+                mypos[1] -= 1
         if command == "A" or command == "a":
-            mypos[0] -= 1
+            if maze_tmp[mypos[0] - 1][mypos[1]] != 1:
+                mypos[0] -= 1
         if command == "S" or command == "s":
-            mypos[1] += 1
+            if maze_tmp[mypos[0]][mypos[1] + 1] != 1:
+                mypos[1] += 1
         if command == "D" or command == "d":
-            mypos[0] += 1
+            if maze_tmp[mypos[0] + 1][mypos[1]] != 1:
+                mypos[0] += 1
         if command == "E" or command == "e":
-            pymaze_draw(maze_tmp)
+            draw(maze_tmp)
+            input("Press Enter key ...")
         if command == "Q" or command == "q":
             break
 
-            
+
 def pymaze(width: int = 15, height: int = 9):
-    maze = pymaze_makemaze(width, height)
-    # pymaze_draw(maze)
-    pymaze_play(maze)
+    maze = makemaze(width, height)
+    play(maze)
 
 pymaze(19, 15)
-
