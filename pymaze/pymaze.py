@@ -1,13 +1,19 @@
 import random
+import copy
+import os
 
 
-def pyMaze_draw(maze: list):
+def pyMaze_draw(maze: list,x_min: int = 0, x_max: int = 0, y_min: int =0, y_max:int = 0 ):
+    if x_max == 0:
+        x_max = len(maze)
+    if y_max == 0:
+        y_max = len(maze[0])
     if type(maze[0]) is not list:
         print("ERROR:Maze must be 2D array.")
         exit()
-    DrawObjects = {0: " ⬜", 1: " ⬛", 2:" 🟦"}
-    for j in range(len(maze[0])):
-        for i in range(len(maze)):
+    DrawObjects = {0: "\u001b[30m ⬛\u001b[0m", 1: "\u001b[37m ⬛\u001b[0m", 2:"\u001b[34m ⬛\u001b[0m", 3:"\u001b[31m ⬛\u001b[0m"}
+    for j in range(y_min,y_max):
+        for i in range(x_min,x_max):
             print(DrawObjects[maze[i][j]], end="")
         print()
 
@@ -18,7 +24,7 @@ def pyMaze_makemaze(width: int = 15, height: int = 9) -> list:
         print("The argument must be an odd number.")
         playable = False
     if width < 7 or height < 7:
-        print("The argument must be greater than 7.")
+        print("The argument must be greater than 6.")
         playable = False
     if not playable:
         exit()
@@ -87,8 +93,13 @@ def pyMaze_play(maze: list):
     mypos = [2, 2]
 
     while True:
-        tmpMaze = origimalMaze
-        command = input()
+        os.system('cls')
+        print()
+        tmpMaze = copy.deepcopy(origimalMaze)
+        tmpMaze[mypos[0]][mypos[1]] = 3
+        pyMaze_draw(tmpMaze,mypos[0]-2,mypos[0]+3,mypos[1]-2,mypos[1]+3)
+
+        command = input("command:")
         if command == "W" or command == "w":
             mypos[1] -= 1
         if command == "A" or command == "a":
@@ -98,14 +109,14 @@ def pyMaze_play(maze: list):
         if command == "D" or command == "d":
             mypos[0] += 1
         if command == "E" or command == "e":
-            pass
+            pyMaze_draw(tmpMaze)
         if command == "Q" or command == "q":
             break
 
 
-
 def pyMaze(width: int = 15, height: int = 9):
     maze = pyMaze_makemaze(width, height)
+    # pyMaze_draw(maze)
     pyMaze_play(maze)
 
 pyMaze(19, 15)
