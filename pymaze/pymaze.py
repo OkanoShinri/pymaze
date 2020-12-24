@@ -4,6 +4,7 @@ import os
 
 
 def pymaze_draw(maze: list,x_min: int = 0, x_max: int = 0, y_min: int =0, y_max:int = 0 ):
+
     if x_max == 0:
         x_max = len(maze)
     if y_max == 0:
@@ -99,6 +100,7 @@ def pymaze_play(maze: list):
         maze_tmp[mypos[0]][mypos[1]] = 3
         pymaze_draw(maze_tmp, mypos[0]-2, mypos[0]+3, mypos[1]-2, mypos[1]+3)
 
+
         command = input("command:")
         if command == "W" or command == "w":
             mypos[1] -= 1
@@ -113,10 +115,11 @@ def pymaze_play(maze: list):
         if command == "Q" or command == "q":
             break
 
-
+            
 def pymaze(width: int = 15, height: int = 9):
     maze = pymaze_makemaze(width, height)
     # pymaze_draw(maze)
     pymaze_play(maze)
 
 pymaze(19, 15)
+
