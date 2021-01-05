@@ -1,6 +1,7 @@
 import random
 import copy
 import os
+import time
 
 
 def draw(maze: list, x_min: int = 0, x_max: int = 0, y_min: int = 0, y_max: int = 0):
@@ -12,8 +13,8 @@ def draw(maze: list, x_min: int = 0, x_max: int = 0, y_min: int = 0, y_max: int 
     if y_max == 0:
         y_max = len(maze[0])
 
-    draw_objects = {0: "\u001b[30m ⬛\u001b[0m", 1: "\u001b[37m ⬛\u001b[0m", 2: "\u001b[34m ⬛\u001b[0m",
-                    3: "\u001b[31m ⬛\u001b[0m"}
+    draw_objects = {0: "\u001b[40m  \u001b[0m", 1: "\u001b[47m  \u001b[0m", 2: "\u001b[44m  \u001b[0m",
+                    3: "\u001b[31m●\u001b[0m"}
     for j in range(y_min, y_max):
         for i in range(x_min, x_max):
             print(draw_objects[maze[i][j]], end="")
@@ -30,6 +31,8 @@ def makemaze(width: int = 15, height: int = 9) -> list:
         playable = False
     if not playable:
         exit()
+
+    draw_process = input("生成過程を表示しますか？(y/n):") 
 
     width += 2
     height += 2
@@ -74,11 +77,16 @@ def makemaze(width: int = 15, height: int = 9) -> list:
                 start_points.append(current_position[:])
 
             vec = random.choice(moveable_directions)
-            maze_map[current_position[0] + 2 * vec[0]][current_position[1] + 2 * vec[1]] = \
-            maze_map[current_position[0] + vec[0]][
-                current_position[1] + vec[1]] = 0
+            maze_map[current_position[0] + 2 * vec[0]][current_position[1] + 2 * vec[1]] = 0
+            maze_map[current_position[0] + vec[0]][current_position[1] + vec[1]] = 0
             current_position[0] += 2 * vec[0]
             current_position[1] += 2 * vec[1]
+            if draw_process == "Y" or draw_process == "y":
+                os.system('cls')
+                draw(maze_map)
+                time.sleep(0.1)
+
+
 
     # 探索終了
     for i in range(width):
@@ -93,43 +101,65 @@ def makemaze(width: int = 15, height: int = 9) -> list:
 
 def play(maze: list):
     maze_original = maze
+    maze_currentmap = [[1 for _ in range(len(maze[0]))] for _ in range(len(maze))]
     mypos = [2, 2]
 
     while True:
         if mypos == [len(maze_original) - 3, len(maze_original[0]) - 3]:
             draw(maze_original)
             print("Congratulations!")
+            input("Press Enter key")
             break
-
+        
+        maze_minimap = copy.deepcopy(maze_original)
+        maze_minimap[mypos[0]][mypos[1]] = 3
+        maze_currentmap[mypos[0]][mypos[1]] = 0
+        
+        # 周囲4マスで「道があるが未到達」のマスを青色に
+        for i in [-1, 1]:
+            if maze_minimap[mypos[0] + i][mypos[1]] == 0 and maze_currentmap[mypos[0] + i][mypos[1]] == 1:
+                maze_currentmap[mypos[0] + i][mypos[1]] = 2
+            if maze_minimap[mypos[0]][mypos[1] + i] == 0 and maze_currentmap[mypos[0]][mypos[1] + i] == 1:
+                maze_currentmap[mypos[0]][mypos[1] + i] = 2
+        
         os.system('cls')
-        print()
-        maze_tmp = copy.deepcopy(maze_original)
-        maze_tmp[mypos[0]][mypos[1]] = 3
-
-        draw(maze_tmp, mypos[0] - 2, mypos[0] + 3, mypos[1] - 2, mypos[1] + 3)
-        print()
-
+        print("===========")
+        draw(maze_minimap, mypos[0] - 2, mypos[0] + 3, mypos[1] - 2, mypos[1] + 3)
+        print("===========")
+        print("q:quit  w:up    e:map")
+        print("a:left  s:down  d:right")
         command = input("command:")
         if command == "W" or command == "w":
-            if maze_tmp[mypos[0]][mypos[1] - 1] != 1:
+            if maze_minimap[mypos[0]][mypos[1] - 1] != 1:
                 mypos[1] -= 1
-        if command == "A" or command == "a":
-            if maze_tmp[mypos[0] - 1][mypos[1]] != 1:
+        elif command == "A" or command == "a":
+            if maze_minimap[mypos[0] - 1][mypos[1]] != 1:
                 mypos[0] -= 1
-        if command == "S" or command == "s":
-            if maze_tmp[mypos[0]][mypos[1] + 1] != 1:
+        elif command == "S" or command == "s":
+            if maze_minimap[mypos[0]][mypos[1] + 1] != 1:
                 mypos[1] += 1
-        if command == "D" or command == "d":
-            if maze_tmp[mypos[0] + 1][mypos[1]] != 1:
+        elif command == "D" or command == "d":
+            if maze_minimap[mypos[0] + 1][mypos[1]] != 1:
                 mypos[0] += 1
-        if command == "E" or command == "e":
-            draw(maze_tmp)
+        elif command == "E" or command == "e":
+            maze_currentmap[mypos[0]][mypos[1]] = 3
+            draw(maze_currentmap)
             input("Press Enter key ...")
-        if command == "Q" or command == "q":
-            break
+            maze_currentmap[mypos[0]][mypos[1]] = 0
+        elif command == "R" or command == "r":
+            r = input("スタート地点に戻りますか？(y/n):")
+            if r == "Y" or r == "y":
+                mypos = [2, 2]
+        elif command == "Q" or command == "q":
+            q = input("ゲームを終了しますか？(y/n):")
+            if q == "Y" or q == "y":
+                break
+        elif command == "cheat":
+            draw(maze_minimap)
+            input("Press Enter key ...")
 
 
-def pymaze(width: int = 15, height: int = 9):
+def pymaze(width: int = 31, height: int = 31):
     maze = makemaze(width, height)
     play(maze)
 
