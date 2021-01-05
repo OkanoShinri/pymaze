@@ -21,7 +21,7 @@ def draw(maze: list, x_min: int = 0, x_max: int = 0, y_min: int = 0, y_max: int 
         print()
 
 
-def makemaze(width: int = 15, height: int = 9) -> list:
+def makemaze(width: int = 15, height: int = 9, draw_process: bool = False) -> list:
     playable = True
     if width % 2 == 0 or height % 2 == 0:
         print("The argument must be an odd number.")
@@ -32,7 +32,7 @@ def makemaze(width: int = 15, height: int = 9) -> list:
     if not playable:
         exit()
 
-    draw_process = input("生成過程を表示しますか？(y/n):") 
+    is_draw_process = draw_process
 
     width += 2
     height += 2
@@ -81,7 +81,7 @@ def makemaze(width: int = 15, height: int = 9) -> list:
             maze_map[current_position[0] + vec[0]][current_position[1] + vec[1]] = 0
             current_position[0] += 2 * vec[0]
             current_position[1] += 2 * vec[1]
-            if draw_process == "Y" or draw_process == "y":
+            if is_draw_process:
                 os.system('cls')
                 draw(maze_map)
                 time.sleep(0.1)
@@ -160,8 +160,10 @@ def play(maze: list) -> None:
 
 
 def pymaze(width: int = 31, height: int = 31) -> None:
-    maze = makemaze(width, height)
+    draw_process = False
+    tmp = input("生成過程を表示しますか？(y/n):")
+    if tmp == "y" or tmp == "Y":
+        draw_process = True
+    maze = makemaze(width, height, draw_process)
     play(maze)
 
-
-pymaze()
