@@ -82,7 +82,7 @@ def makemaze(width: int = 15, height: int = 9, draw_process: bool = False) -> li
             current_position[0] += 2 * vec[0]
             current_position[1] += 2 * vec[1]
             if is_draw_process:
-                os.system('cls')
+                os.system('clear')
                 draw(maze_map)
                 time.sleep(0.1)
 
