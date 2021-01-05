@@ -5,6 +5,8 @@
 自動生成される迷路に、実際に迷い込んでみよう。
 
 
+![img01](https://user-images.githubusercontent.com/72956592/103644547-e37ad280-4f99-11eb-841f-8afa114277e4.png)
+
 
 ## インストール方法
 インストールコマンドは`make install`です。
