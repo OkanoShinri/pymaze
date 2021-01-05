@@ -122,7 +122,7 @@ def play(maze: list) -> None:
             if maze_minimap[mypos[0]][mypos[1] + i] == 0 and maze_currentmap[mypos[0]][mypos[1] + i] == 1:
                 maze_currentmap[mypos[0]][mypos[1] + i] = 2
         
-        os.system('cls')
+        os.system('clear')
         print("===========")
         draw(maze_minimap, mypos[0] - 2, mypos[0] + 3, mypos[1] - 2, mypos[1] + 3)
         print("===========")
