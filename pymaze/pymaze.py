@@ -4,7 +4,7 @@ import os
 import time
 
 
-def draw(maze: list, x_min: int = 0, x_max: int = 0, y_min: int = 0, y_max: int = 0):
+def draw(maze: list, x_min: int = 0, x_max: int = 0, y_min: int = 0, y_max: int = 0) -> None:
     if type(maze[0]) is not list:
         print("ERROR:Maze must be 2D array.")
         exit()
@@ -99,7 +99,7 @@ def makemaze(width: int = 15, height: int = 9) -> list:
     return maze_map
 
 
-def play(maze: list):
+def play(maze: list) -> None:
     maze_original = maze
     maze_currentmap = [[1 for _ in range(len(maze[0]))] for _ in range(len(maze))]
     mypos = [2, 2]
@@ -159,7 +159,7 @@ def play(maze: list):
             input("Press Enter key ...")
 
 
-def pymaze(width: int = 31, height: int = 31):
+def pymaze(width: int = 31, height: int = 31) -> None:
     maze = makemaze(width, height)
     play(maze)
 
