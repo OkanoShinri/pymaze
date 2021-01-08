@@ -82,7 +82,10 @@ def makemaze(width: int = 15, height: int = 9, draw_process: bool = False) -> li
             current_position[0] += 2 * vec[0]
             current_position[1] += 2 * vec[1]
             if is_draw_process:
-                os.system('clear')
+                if os.name == 'nt':
+                    os.system('cls')
+                else:
+                    os.system('clear')
                 draw(maze_map)
                 time.sleep(0.1)
 
@@ -122,7 +125,10 @@ def play(maze: list) -> None:
             if maze_minimap[mypos[0]][mypos[1] + i] == 0 and maze_currentmap[mypos[0]][mypos[1] + i] == 1:
                 maze_currentmap[mypos[0]][mypos[1] + i] = 2
         
-        os.system('clear')
+        if os.name == 'nt':
+            os.system('cls')
+        else:
+            os.system('clear')
         print("===========")
         draw(maze_minimap, mypos[0] - 2, mypos[0] + 3, mypos[1] - 2, mypos[1] + 3)
         print("===========")
@@ -166,4 +172,3 @@ def pymaze(width: int = 31, height: int = 31) -> None:
         draw_process = True
     maze = makemaze(width, height, draw_process)
     play(maze)
-
