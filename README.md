@@ -33,7 +33,6 @@ pymaze(15,27)
 
 
 ## 困ったことがあったら
-https://github.com/OkanoShinri/dev-tutorial-exercise/issues
-上のissuesに書き込んでください。
+issuesに書き込んでください。
 
 
