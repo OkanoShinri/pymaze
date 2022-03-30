@@ -4,6 +4,8 @@
 
 ![img01](https://user-images.githubusercontent.com/72956592/103644547-e37ad280-4f99-11eb-841f-8afa114277e4.png)
 
+![pymaze_demo](https://user-images.githubusercontent.com/72956592/160869261-21192be5-0223-4303-a72a-568b49a2fc2e.gif)
+
 ## 遊び方
 
 仮想環境を作って、その中で遊ぶのが良いでしょう。

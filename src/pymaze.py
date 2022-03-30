@@ -97,11 +97,8 @@ def makemaze(width: int = 15, height: int = 9, draw_process: bool = False) -> li
             current_position[0] += 2 * vec[0]
             current_position[1] += 2 * vec[1]
             if is_draw_process:
-                if os.name == "nt":
-                    os.system("cls")
-                else:
-                    os.system("clear")
                 draw(maze_map)
+                print(f"\033[{height}A",end="")
                 time.sleep(0.1)
 
     # 探索終了
@@ -122,6 +119,7 @@ def play(maze: list) -> None:
 
     while True:
         if mypos == [len(maze_original) - 3, len(maze_original[0]) - 3]:
+            print()
             draw(maze_original)
             print("Congratulations!")
             input("Press Enter key")
@@ -172,7 +170,8 @@ def play(maze: list) -> None:
             print()
             maze_currentmap[mypos[0]][mypos[1]] = 3
             draw(maze_currentmap)
-            input("Press Enter key ...")
+            print("Press Any key ...")
+            hoge = readchar.readchar()
             maze_currentmap[mypos[0]][mypos[1]] = 0
         elif command == "R" or command == "r":
             r = input("スタート地点に戻りますか？(y/n):")
@@ -183,6 +182,7 @@ def play(maze: list) -> None:
             if q == "Y" or q == "y":
                 break
         elif command == "C":  # cheat
+            print()
             draw(maze_minimap)
             input("Press Enter key ...")
 
