@@ -1,4 +1,4 @@
-_PHONY: venv unittest install uninstall clean
+_PHONY: venv install uninstall clean
 
 venv:
 	python3 -m venv venv
@@ -7,9 +7,6 @@ venv:
 
 run:
 	venv/bin/python3 src/pymaze.py
-
-unittest:
-	python3 -m unittest discover -v
 
 install:
 	venv/bin/python3 setup.py install
