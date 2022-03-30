@@ -1,13 +1,21 @@
-_PHONY: unittest install uninstall clean
+_PHONY: venv unittest install uninstall clean
+
+venv:
+	python3 -m venv venv
+	venv/bin/python3 -m pip install --upgrade pip
+	venv/bin/python3 -m pip install -r requirements.txt
+
+run:
+	venv/bin/python3 src/pymaze.py
 
 unittest:
 	python3 -m unittest discover -v
 
 install:
-	python3 setup.py install
+	venv/bin/python3 setup.py install
 
 uninstall:
-	pip3 uninstall pymaze -y
+	venv/bin/python3 -m pip uninstall pymaze -y
 
 clean:
 	rm -rf build
